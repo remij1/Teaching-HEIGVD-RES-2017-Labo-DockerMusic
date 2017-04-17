@@ -31,3 +31,8 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+*.config
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/.vs
