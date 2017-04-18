@@ -23,7 +23,8 @@ var uuidV4 = require('uuid/v4');
 var instrument = {
     'instrument': process.argv[2],
     'uuid' : uuidV4(),
-    'sound': SOUNDS[process.argv[2]]
+    'sound': SOUNDS[process.argv[2]],
+    'activeSince': new Date().toISOString()
 };
 
 
