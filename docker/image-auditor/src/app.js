@@ -31,7 +31,7 @@ udpListener.on('message', function (message, remote) {
     console.log(remote.address + ':' + remote.port + ' - ' + message);
 
     var instrument = JSON.parse(message);
-    instruments.set(instrument.uuid, instruments);
+    instruments.set(instrument.uuid, instrument);
 });
 
 udpListener.bind(MULTICAST_PORT);
@@ -39,7 +39,17 @@ udpListener.bind(MULTICAST_PORT);
 /* TCP SIDE */
 
 tcpServer.on('connection', function (socket) {
-    var buffer = new Buffer(JSON.stringify(instruments));
+
+    var curInstruments = [];
+
+    instruments.forEach((value) => {
+        curInstruments.push(value);
+    });
+
+
+    console.log(instruments.values());
+
+    var buffer = new Buffer(JSON.stringify(curInstruments));
     socket.write(buffer);
     socket.destroy();
 });
