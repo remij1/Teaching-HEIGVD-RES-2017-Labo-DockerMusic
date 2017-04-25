@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "description": "This app is used to send over the network datagram packets",
   "main": "index.js",
-  "author": "Rémi Jacquemard"
+  "author": "Remi Jacquemard",
+  "dependencies": {
+    "uuid": "^3.0.1"
+  }
 }

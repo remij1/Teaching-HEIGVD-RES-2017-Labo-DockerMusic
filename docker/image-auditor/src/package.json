@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "description": "This auditor listen to instruments over the network",
   "main": "index.js",
-  "author": "Rémi Jacquemard"
+  "author": "Remi Jacquemard"
 }

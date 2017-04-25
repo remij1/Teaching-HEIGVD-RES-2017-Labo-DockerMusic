@@ -1,5 +1,5 @@
 FROM node:4.3.1
-MAINTAINER Rémi Jacquemard <remi.jacquemard@heig-vd.ch>
+MAINTAINER Remi Jacquemard <remi.jacquemard@heig-vd.ch>
 
 #
 # When we build the image, we copy the executable jar in the image file system. 
