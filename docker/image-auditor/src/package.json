@@ -1,7 +1,7 @@
 {
   "name": "music-auditor",
   "version": "1.0.0",
-  "description": "",
+  "description": "This auditor listen to instruments over the network",
   "main": "index.js",
   "author": "Rémi Jacquemard"
 }

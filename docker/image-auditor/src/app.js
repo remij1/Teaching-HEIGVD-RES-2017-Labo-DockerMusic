@@ -30,8 +30,22 @@ udpListener.on('listening', function () {
 udpListener.on('message', function (message, remote) {
     console.log(remote.address + ':' + remote.port + ' - ' + message);
 
+    var curDate = new Date();
+
     var instrument = JSON.parse(message);
-    instruments.set(instrument.uuid, instrument);
+    if (!instruments.has(instrument.uuid)) { //If we haven't seen the instrument yet, we add it
+        instrument.activeSince = curDate;
+        delete instrument.sound;
+        instruments.set(instrument.uuid, instrument);
+    }
+
+
+    // We update the date at wich we seen the instrument for the last time
+    instruments.get(instrument.uuid).lastSeen = curDate;
+    instrument.lastSeen = curDate;
+
+    console.log(instruments.values());
+    
 });
 
 udpListener.bind(MULTICAST_PORT);
@@ -43,13 +57,17 @@ tcpServer.on('connection', function (socket) {
     var curInstruments = [];
 
     instruments.forEach((value) => {
-        curInstruments.push(value);
+        var curInstrument = {};
+        curInstrument.uuid = value.uuid;
+        curInstrument.instrument = value.instrument;
+        curInstrument.activeSince = value.activeSince.toISOString();
+        curInstruments.push(curInstrument);
     });
 
 
     console.log(instruments.values());
 
-    var buffer = new Buffer(JSON.stringify(curInstruments));
+    var buffer = new Buffer(JSON.stringify(curInstruments) + "\n");
     socket.write(buffer);
     socket.destroy();
 });
@@ -59,3 +77,16 @@ tcpServer.on('listening', function () {
 });
 
 tcpServer.listen(TCP_PORT);
+
+//Every second, we clean the list of musician every second
+setInterval(checkInstruments, 1000);
+
+function checkInstruments() {
+    //The timeout is set to be about 5 second
+    var lastDate = new Date() - 5000;
+    instruments.forEach((value) => {
+        if (value.lastSeen < lastDate) {
+            instruments.delete(value.uuid);
+        }
+    });
+}

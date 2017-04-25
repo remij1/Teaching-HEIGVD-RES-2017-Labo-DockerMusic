@@ -1,7 +1,7 @@
 {
   "name": "music-musician",
   "version": "1.0.0",
-  "description": "",
+  "description": "This app is used to send over the network datagram packets",
   "main": "index.js",
   "author": "Rémi Jacquemard"
 }
